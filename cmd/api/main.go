@@ -48,9 +48,11 @@ type config struct {
 		password string
 		sender   string
 	}
-	// Add a cors struct and trustedOrigins field with the type []string.
 	cors struct {
 		trustedOrigins []string
+	}
+	jwt struct {
+		secret string // Add a new field to store the JWT signing secret.
 	}
 }
 
@@ -98,11 +100,12 @@ func main() {
 		return nil
 	})
 
-	// Create a new version boolean flag with the default value of false.
+	// Parse the JWT signing secret from the command-line-flag. Notice that we leave the
+	// default value as the empty string if no flag is provided.
+	flag.StringVar(&cfg.jwt.secret, "jwt-secret", "", "JWT secret")
 	displayVersion := flag.Bool("version", false, "Display version and exit")
 	flag.Parse()
-	// If the version flag value is true, then print out the version number and
-	// immediately exit.
+
 	if *displayVersion {
 		fmt.Printf("Version:\t%s\n", version)
 		os.Exit(0)
