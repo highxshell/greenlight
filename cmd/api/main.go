@@ -9,6 +9,7 @@ import (
 	"github.com/highxshell/greenlight/internal/data"
 	"github.com/highxshell/greenlight/internal/jsonlog"
 	"github.com/highxshell/greenlight/internal/mailer"
+	"github.com/highxshell/greenlight/internal/vcs"
 	"os"
 	"runtime"
 	"strings"
@@ -21,7 +22,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const version = "1.0.0"
+// Make version a variable (rather than a constant) and set its value to vcs.Version().
+var (
+	version = vcs.Version()
+)
 
 type config struct {
 	port int
